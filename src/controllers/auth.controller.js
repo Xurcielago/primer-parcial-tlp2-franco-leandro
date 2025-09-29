@@ -1,6 +1,6 @@
-import { hashPassword } from "../helpers/bcrypt.helper.js";
+import { comparePassword, hashPassword } from "../helpers/bcrypt.helper.js";
+import { signToken } from "../helpers/jwt.helper.js";
 import { UserModel } from "../models/mongoose/user.model.js";
-
 
 export const register = async (req, res) => {
   const { username, email, password, role, profile } = req.body;
@@ -26,6 +26,7 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  const { username, password } = req.body;
   try {
     // TODO: buscar user, validar password, firmar JWT y setear cookie httpOnly
     // Completado 
@@ -35,7 +36,7 @@ export const login = async (req, res) => {
     if (!validatePassword) {
       return res.status(401).json("Credenciales inválidas");
     }
-    const token = generateToken(loginUser);
+    const token = signToken(loginUser);
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: 34560000,

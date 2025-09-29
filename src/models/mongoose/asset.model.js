@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
 // TODO: completar relaciones embebidas y referenciadas
 // Completado

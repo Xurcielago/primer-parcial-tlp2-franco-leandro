@@ -1,5 +1,5 @@
-import { hashPassword } from "../helpers/bcrypt.helper";
-import { UserModel } from "../models/mongoose/user.model";
+import { hashPassword } from "../helpers/bcrypt.helper.js";
+import { UserModel } from "../models/mongoose/user.model.js";
 
 
 export const register = async (req, res) => {

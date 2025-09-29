@@ -50,5 +50,16 @@ const UserSchema = new Schema(
 );
 
 // ! FALTA COMPLETAR ACA
+UserSchema.pre(/^find/, async function (next) {
+  this.where({ deletedAt: null})
+  next()
+})
+
+UserSchema.virtual("assets", {
+  ref: "Asset",
+  localField: "_id",
+  foreignField: "responsible",
+});
+
 
 export const UserModel = model("User", UserSchema);

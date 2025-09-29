@@ -25,7 +25,14 @@ const AssetSchema = new Schema(
       type: Types.ObjectId,
       ref: "User",
       required: true,
-    }
+    },
+    categories: [
+      {
+        type: Types.ObjectId,
+        ref: "Category",
+        required: true,
+      },
+    ],
   },
   { timestamps: true }
 );

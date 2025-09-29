@@ -1,7 +1,22 @@
+import { AssetModel } from "../models/mongoose/asset.model";
+
 export const createAsset = async (req, res) => {
-  try {
     // TODO: crear asset (usuario autenticado)
-    return res.status(201).json({ msg: "Asset creado correctamente" });
+  const { inventoryNumber, brand, model, status, responsible, categories} = req.body;
+  try {
+    const newArticle = await ArticleModel.create({
+      inventoryNumber,
+      brand,
+      model,
+      status,
+      responsible: req.loginUser.id,
+      categories,
+    });
+    return res.status(201).json({
+      msg: "Asset creado correctamente",
+      newArticle,
+    });
+    
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Error interno del servidor" });
@@ -11,7 +26,12 @@ export const createAsset = async (req, res) => {
 export const getAllAssets = async (_req, res) => {
   try {
     // TODO: listar assets con el responsible y sus categories (populate) (solo admin)
-    return res.status(200).json({ data: assets });
+    const data = await AssetModel.find().populate("categories");
+    return res.status(200).json({
+      msg: "Listando todos los artículos",
+      data,
+    });
+
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Error interno del servidor" });
